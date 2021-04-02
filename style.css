@@ -28,7 +28,6 @@ body {
 	background-image: url('obrazky/pozadi/seigaiha.png');
 	background-image: url('obrazky/pozadi/hypnotize.png');*/
     b
-	
 }
 
 #score {
@@ -44,10 +43,8 @@ body {
 #panacek,
 #mince {
     position: absolute;
-    background: red;
 }
 
 #panacek {
     z-index: 1;
-    background: lightblue;
 }

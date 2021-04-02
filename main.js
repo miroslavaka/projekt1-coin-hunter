@@ -18,7 +18,7 @@ let panacekSirka = 64;
 let panacekVyska = 70;
 let minceSirka = 36;
 let minceVyska = 36;
-
+let panacekX, panacekY, minceX, minceY;
 
 function loadPage() {
     let maxHeight = window.innerHeight;
@@ -28,11 +28,9 @@ function loadPage() {
     obrazok.src = 'obrazky/panacek.png';
 }
 
-
 //nacitanie z klavesnice
 function getKeyAndMove(event) {
     let keycode = event.keyCode;
-    //console.log(keycode);
     if (keycode == 37) {
         moveLeft();
     } else if (keycode == 38) {
@@ -46,7 +44,6 @@ function getKeyAndMove(event) {
 }
 
 //pohyb hore, dole, doprava, dolava
-
 let width1 = window.innerWidth - panacekSirka;
 let height1 = window.innerHeight - panacekVyska;
 
@@ -68,27 +65,26 @@ function moveUp() {
 
 function moveRight() {
     let panacekleft = parseInt(panacek.style.left);
-    panacek.style.left = panacekleft + 5 + 'px';
     obrazok.src = 'obrazky/panacek-vpravo.png';
-    if (panacekleft > width1) {
-        panacek.style.left = width1 + 'px';
-    }
-
-    //if (panacekleft < width1) {
-    //panacek.style.left = panacekleft + 5 + 'px';
+    //if (panacekleft > width1) {
+    //panacek.style.left = width1 + 'px';
     //}
+
+    if (panacekleft < width1) {
+        panacek.style.left = panacekleft + 5 + 'px';
+    }
 }
 
 function moveDown() {
     let panacektop = parseInt(panacek.style.top);
-    panacek.style.top = panacektop + 5 + 'px';
-    if (panacektop > height1) {
-        panacek.style.top = height1 + 'px';
-    }
-
-    //if (panacektop < height1) {
-    //    panacek.style.top = panacektop + 5 + 'px';
+    //panacek.style.top = panacektop + 5 + 'px';
+    // if (panacektop > height1) {
+    //    panacek.style.top = height1 + 'px';
     //}
+
+    if (panacektop < height1) {
+        panacek.style.top = panacektop + 5 + 'px';
+    }
 }
 
 //nahodna pozicia mince
@@ -108,22 +104,17 @@ getRandomPosition();
 let s = 0;
 
 function checkCollision() {
-    //let panacekX = panacek.getBoundingClientRect().left;
-    //let panacekY = panacek.getBoundingClientRect().top;
-    let panacekX = panacek.offsetLeft;
-    console.log(panacekX);
-    let panacekY = panacek.offsetTop;
+    panacekX = panacek.offsetLeft;
+    //console.log(panacekX);
+    panacekY = panacek.offsetTop;
 
-    //let minceX = mince.getBoundingClientRect().left;
-    //let minceY = mince.getBoundingClientRect().top;
-    let minceX = mince.offsetLeft;
-    let minceY = mince.offsetTop;
+    minceX = mince.offsetLeft;
+    minceY = mince.offsetTop;
 
     if (!(panacekX + panacekSirka < minceX ||
             minceX + minceSirka < panacekX ||
             panacekY + panacekVyska < minceY ||
             minceY + minceVyska < panacekY)) {
-        //alert('collision');
         zvukmince.play();
         s = s + 1;
         skore.innerHTML = s;
