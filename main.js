@@ -6,7 +6,6 @@ if (!( panacekX + panacekSirka < minceX || minceX + minceSirka < panacekX || pan
 */
 
 // sem začni psát svůj program
-
 let panacek = document.querySelector('#panacek');
 let mince = document.querySelector('#mince');
 let obrazok = document.querySelector('img');
@@ -14,17 +13,17 @@ let skore = document.querySelector('#score');
 let hudba = document.querySelector('#hudba');
 let zvukmince = document.querySelector('#zvukmince');
 let fanfara = document.querySelector('#zvukfanfara');
-let panacekSirka = 64;
-let panacekVyska = 70;
-let minceSirka = 36;
-let minceVyska = 36;
+const panacekSirka = 64;
+const panacekVyska = 70;
+const minceSirka = 36;
+const minceVyska = 36;
+let maxWidth = window.innerWidth;
+let maxHeight = window.innerHeight;
 let panacekX, panacekY, minceX, minceY;
 
 function loadPage() {
-    let maxHeight = window.innerHeight;
-    let maxWidth = window.innerWidth;
-    panacek.style.top = maxHeight / 2 + 'px';
     panacek.style.left = maxWidth / 2 + 'px';
+    panacek.style.top = maxHeight / 2 + 'px';
     obrazok.src = 'obrazky/panacek.png';
 }
 
@@ -44,9 +43,6 @@ function getKeyAndMove(event) {
 }
 
 //pohyb hore, dole, doprava, dolava
-let width1 = window.innerWidth - panacekSirka;
-let height1 = window.innerHeight - panacekVyska;
-
 function moveLeft() {
     let panacekleft = parseInt(panacek.style.left);
     obrazok.src = 'obrazky/panacek-vlevo.png';
@@ -66,37 +62,26 @@ function moveUp() {
 function moveRight() {
     let panacekleft = parseInt(panacek.style.left);
     obrazok.src = 'obrazky/panacek-vpravo.png';
-    //if (panacekleft > width1) {
-    //panacek.style.left = width1 + 'px';
-    //}
-
-    if (panacekleft < width1) {
+    if (panacekleft < maxWidth - panacekSirka - 5) {
         panacek.style.left = panacekleft + 5 + 'px';
     }
 }
 
 function moveDown() {
     let panacektop = parseInt(panacek.style.top);
-    //panacek.style.top = panacektop + 5 + 'px';
-    // if (panacektop > height1) {
-    //    panacek.style.top = height1 + 'px';
-    //}
-
-    if (panacektop < height1) {
+    if (panacektop < maxHeight - panacekVyska - 5) {
         panacek.style.top = panacektop + 5 + 'px';
     }
 }
 
 //nahodna pozicia mince
 function getRandomPosition() {
-    let width2 = window.innerHeight - minceSirka;
-    let height2 = window.innerWidth - minceVyska;
-    let randWidth = Math.floor(Math.random() * width2);
-    let randHeight = Math.floor(Math.random() * height2);
-
+    let width = window.innerHeight - minceSirka;
+    let height = window.innerWidth - minceVyska;
+    let randWidth = Math.floor(Math.random() * width);
+    let randHeight = Math.floor(Math.random() * height);
     mince.style.top = randWidth + 'px';
     mince.style.left = randHeight + 'px';
-
 }
 getRandomPosition();
 
@@ -105,9 +90,7 @@ let s = 0;
 
 function checkCollision() {
     panacekX = panacek.offsetLeft;
-    //console.log(panacekX);
     panacekY = panacek.offsetTop;
-
     minceX = mince.offsetLeft;
     minceY = mince.offsetTop;
 
@@ -123,6 +106,7 @@ function checkCollision() {
             fanfara.play();
             s = 0;
             skore.innerHTML = s;
+            alert('Vyhrávaš!');
             window.onload = loadPage();
         }
         getRandomPosition();
